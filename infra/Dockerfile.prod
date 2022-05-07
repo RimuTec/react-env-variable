@@ -1,0 +1,23 @@
+FROM node:14.17.4 as build
+
+# node may come with an older version of npm. Ensure we have a specific npm.
+RUN npm install -g npm@6.14.14
+
+
+################################################################################
+# Install prerequisites
+RUN apt-get update
+RUN apt-get install -y \
+    lsb-release \
+    curl
+
+
+################################################################################
+# React app
+# RUN echo pwd
+# WORKDIR /src/app
+
+# restore npm packages
+# RUN npm ci
+
+# CMD ["npm", "start"]

@@ -3,6 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 import { API_ENDPOINT } from './config';
 
+const w: any = window;
+
 function App() {
   return (
     <div className="App">
@@ -11,6 +13,7 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to reload. {API_ENDPOINT}
         </p>
+        <p>{w?._env_?.API_URL}</p>
         <a
           className="App-link"
           href="https://reactjs.org"
