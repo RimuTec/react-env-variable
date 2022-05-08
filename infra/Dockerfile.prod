@@ -39,7 +39,7 @@ RUN npm run server:build
 ################################################################################
 # Phase 2: build container image for deployment
 
-FROM node:14.17.4 as runtime
+FROM node:14.17.4-slim as runtime
 
 WORKDIR /app
 

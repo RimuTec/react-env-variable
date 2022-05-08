@@ -16,5 +16,5 @@ services:
        # Allow AWS CLI and other tools to read an AWS profile
        - ~/.aws:/home/node/.aws
     environment:
-       - REACT_APP_HELLO=https://prod.example.com/1556hrs
+       - REACT_APP_HELLO=https://prod.example.com/1750hrs
     command: sleep infinity
