@@ -11,9 +11,10 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.tsx</code> and save to reload. {API_ENDPOINT}
+          Edit <code>src/App.tsx</code> and save to reload. {API_ENDPOINT} 1122 hrs
         </p>
-        <p>{w?._env_?.API_URL}</p>
+        <p>Env variable from docker image at compile time: {API_ENDPOINT} 1122 hrs</p>
+        <p>Env variable from docker image at runtime: {w?._env_?.API_URL} 1133 hrs</p>
         <a
           className="App-link"
           href="https://reactjs.org"

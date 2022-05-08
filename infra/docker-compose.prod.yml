@@ -2,17 +2,19 @@ version: '3.7'
 
 services:
   devcontainer:
-    image: acme/orderservice-dev-container:0.1
+    image: acme/orderservice-prod-container:0.1
     build:
-      context: .
-      dockerfile: ./Dockerfile.prod
-    container_name: orderservice-dev-container
-    hostname: orderservice-dev.local
+      context: ..
+      dockerfile: ./infra/Dockerfile.prod
+    container_name: orderservice-prod-container
+    hostname: orderservice-prod.local
     working_dir: /src
     ports:
-       - 3000:3000 # <<<<<< if preferred, explicit forward the port used by express
+       - 4000:3001 # express serves at 3001
     volumes:
        - ..:/src
        # Allow AWS CLI and other tools to read an AWS profile
        - ~/.aws:/home/node/.aws
+    environment:
+       - REACT_APP_HELLO=https://prod.example.com/1556hrs
     command: sleep infinity

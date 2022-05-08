@@ -1,8 +1,13 @@
+# Based on Dockerfile found in https://dev.to/muratas/using-expressjs-as-backend-for-create-react-app-using-docker-compose-p8o
+
+################################################################################
+################################################################################
+# Phase 1: build React app and backend code
+
 FROM node:14.17.4 as build
 
 # node may come with an older version of npm. Ensure we have a specific npm.
 RUN npm install -g npm@6.14.14
-
 
 ################################################################################
 # Install prerequisites
@@ -13,11 +18,48 @@ RUN apt-get install -y \
 
 
 ################################################################################
-# React app
-# RUN echo pwd
-# WORKDIR /src/app
+# Copy sources into build container
 
-# restore npm packages
-# RUN npm ci
+WORKDIR  /app
+COPY . /app
 
-# CMD ["npm", "start"]
+
+################################################################################
+# Build react app
+WORKDIR /app/app
+RUN npm ci && npm run build
+
+################################################################################
+# Build express app
+WORKDIR /app/app/server
+RUN npm run server:build
+
+
+################################################################################
+################################################################################
+# Phase 2: build container image for deployment
+
+FROM node:14.17.4 as runtime
+
+WORKDIR /app
+
+################################################################################
+# Copy react app files. We only need the output files but not node_modules.
+COPY --from=build /app/app/build /app/app/build
+COPY --from=build /app/app/public /app/app/public
+
+################################################################################
+# Copy files for the express app. This also requires node_modules folder.
+
+COPY --from=build /app/app/server/dist /app/app/server/dist
+COPY --from=build /app/app/server/node_modules /app/app/server/node_modules
+
+################################################################################
+# Copy startup script
+COPY --from=build /app/infra/entrypoint.sh /app/infra/entrypoint.sh
+RUN chmod +x /app/infra/entrypoint.sh
+
+################################################################################
+# Start server
+EXPOSE 4000:3001
+ENTRYPOINT ["/app/infra/entrypoint.sh"]
