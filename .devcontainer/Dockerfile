@@ -7,6 +7,7 @@ RUN npm install -g npm@6.14.14
 ################################################################################
 # Install prerequisites
 RUN apt-get update
-RUN apt-get install -y \
-    lsb-release \
-    curl
+   apt-get upgrade -y && \
+   apt-get install -y \
+      lsb-release \
+      curl

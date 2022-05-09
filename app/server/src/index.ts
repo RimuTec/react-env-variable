@@ -2,7 +2,7 @@ import express from 'express'
 import path from 'path'
 const app = express();
 
-// To run both express and CRA at the same time (rare scanrio), in the package.json of the CRA
+// To run both express and CRA at the same time (rare scenario), in the package.json of the CRA
 // you'll need to add the following line:
 // "proxy": "http://localhost:3001"
 // Do not leave the proxy entry when committing as it will break production.
